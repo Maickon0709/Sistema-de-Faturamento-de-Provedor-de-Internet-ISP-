@@ -1,6 +1,7 @@
 from motor_calculo import calcular_fatura
-from banco_dados_poo import cadastrar_assinante, assinantes
+from banco_dados import assinantes
 from relatorios_analytics import matriz_consumo, conta_mais_alta, acima_da_media
+from servico_assinante import registrar_assinante, registrar_consumo
 
 
 def calcular_fatura_avulsa():
@@ -21,31 +22,21 @@ def cadastrar_novo_assinante():
         id_assinante = int(input("ID do assinante: "))
         nome = input("Nome: ")
         plano = input("Plano (R/E/C): ").upper()
-        if plano not in ("R", "E", "C"):
-            print("Plano inválido.")
-            return
-        cadastrar_assinante(id_assinante, nome, plano)
+        registrar_assinante(id_assinante, nome, plano)
         print(f"Assinante {nome} cadastrado com sucesso.")
-    except ValueError:
-        print("ID inválido, digite um número.")
+    except ValueError as e:
+        print(e)
 
 
 def lancar_consumo_mensal():
     try:
         id_busca = int(input("ID do assinante: "))
-        assinante = next((a for a in assinantes if a.id_assinante == id_busca), None)
-        if assinante is None:
-            print("Assinante não encontrado.")
-            return
         mes = int(input("Mês (1-12): "))
-        if not 1 <= mes <= 12:
-            print("Mês inválido.")
-            return
         consumo = float(input("Consumo em GB: "))
-        assinante.historico[mes - 1] = consumo
+        assinante = registrar_consumo(id_busca, mes, consumo)
         print(f"Consumo de {consumo}GB lançado para {assinante.nome} no mês {mes}.")
-    except ValueError:
-        print("Entrada inválida, digite números onde esperado.")
+    except ValueError as e:
+        print(e)
 
 
 def ver_relatorios():

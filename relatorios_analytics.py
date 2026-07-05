@@ -1,8 +1,10 @@
 from motor_calculo import calcular_fatura
 
+
 def matriz_consumo(assinantes):
     for a in assinantes:
         print(f"{a.nome}: {a.historico}")
+
 
 def conta_mais_alta(assinantes, nivel="N"):
     maior = None
@@ -14,6 +16,7 @@ def conta_mais_alta(assinantes, nivel="N"):
                 maior_valor = valor
                 maior = (a.nome, mes + 1, valor)
     return maior
+
 
 def acima_da_media(assinantes):
     todos_consumos = [c for a in assinantes for c in a.historico]

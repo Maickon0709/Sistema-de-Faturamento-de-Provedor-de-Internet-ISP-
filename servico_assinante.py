@@ -1,15 +1,17 @@
-# servico_assinante.py
-from banco_dados_poo import cadastrar_assinante, assinantes
+from banco_dados import cadastrar_assinante, assinantes
 
 PLANOS_VALIDOS = ("R", "E", "C")
+
 
 def registrar_assinante(id_assinante, nome, plano):
     if plano not in PLANOS_VALIDOS:
         raise ValueError("Plano inválido.")
     return cadastrar_assinante(id_assinante, nome, plano)
 
+
 def buscar_assinante(id_busca):
     return next((a for a in assinantes if a.id_assinante == id_busca), None)
+
 
 def registrar_consumo(id_busca, mes, consumo):
     assinante = buscar_assinante(id_busca)
